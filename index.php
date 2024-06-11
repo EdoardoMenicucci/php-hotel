@@ -37,8 +37,14 @@ $hotels = [
         'distance_to_center' => 50
     ],
 
-];
 
+
+];
+$select = $_GET['noFilters']; //Chiedo all utente se vuole attivare i filtri
+
+$parking = $_GET['parking'];
+
+$rating = $_GET['rating'];
 ?>
 
 
@@ -81,6 +87,10 @@ $hotels = [
             ?>
         </tbody>
     </table>
+    <!-- TESTO SE FUNZIONA -->
+    <?=
+    "$select $parking $rating"
+    ?>
 </body>
 
 </html>

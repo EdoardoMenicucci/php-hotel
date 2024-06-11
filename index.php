@@ -81,7 +81,7 @@ $rating = $_GET['rating'];
         </thead>
         <tbody> <!--corpo della tabela con ciclo for each -->
             <?php
-            // SE L'OPZIONE SENZA FILTRI LI MOSTRO TUTTI
+            // SE L'OPZIONE SENZA FILTRI E' ATTIVA MOSTRO TUTTI GLI HOTEL
             if ($select == 'on') {
                 foreach ($hotels as $hotel) {
                     echo "<tr>";
@@ -93,6 +93,7 @@ $rating = $_GET['rating'];
                     echo "</tr>";
                 }
             } else {
+                // Controllo le variabili sono selezionate entrambe
                 if ($parking == 'true' && $rating == 'true') {
                     foreach ($hotels as $hotel) {
                         if ($hotel['parking'] && $hotel['vote'] >= 2.5) {
@@ -105,7 +106,8 @@ $rating = $_GET['rating'];
                             echo "</tr>";
                         }
                     }
-                } else if ($parking == 'true' && $rating == 'false') {
+                    // Controllo se l'opzione parcheggio e' selezionata
+                } else if ($parking == 'true') {
                     foreach ($hotels as $hotel) {
                         if ($hotel['parking']) {
                             echo "<tr>";
@@ -117,6 +119,7 @@ $rating = $_GET['rating'];
                             echo "</tr>";
                         }
                     }
+                    // Controllo se il rating e' selezionato
                 } else if ($rating == 'true') {
                     foreach ($hotels as $hotel) {
                         if ($hotel['vote'] >= 2.5) {

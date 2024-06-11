@@ -42,11 +42,13 @@ $hotels = [
 ];
 
 // SE METTO LA SPUNTA SENZA FILTRI DIVENTA ON IL SELECT ALTRIMENTI RESTA OFF
-if (isset($_GET['noFilters'])) {
-    $select = $_GET['noFilters'];
-} else {
-    $select = 'off';
-}
+// if (isset($_GET['noFilters'])) {
+//     $select = $_GET['noFilters'];
+// } else {
+//     $select = 'off';
+// }
+//Abbreviazione
+$select = isset($_GET['noFilters']) ? $_GET['noFilters'] : 'off';
 
 $parking = $_GET['parking'];
 

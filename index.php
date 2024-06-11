@@ -40,7 +40,13 @@ $hotels = [
 
 
 ];
-$select = $_GET['noFilters']; //Chiedo all utente se vuole attivare i filtri
+
+// SE METTO LA SPUNTA SENZA FILTRI DIVENTA ON IL SELECT ALTRIMENTI RESTA OFF
+if (isset($_GET['noFilters'])) {
+    $select = $_GET['noFilters'];
+} else {
+    $select = 'off';
+}
 
 $parking = $_GET['parking'];
 
@@ -75,14 +81,55 @@ $rating = $_GET['rating'];
         </thead>
         <tbody> <!--corpo della tabela con ciclo for each -->
             <?php
-            foreach ($hotels as $hotel) {
-                echo "<tr>";
-                echo "<td>{$hotel['name']}</td>";
-                echo "<td>{$hotel['description']}</td>";
-                echo "<td>" . ($hotel['parking'] ? 'Yes' : 'No') . "</td>";
-                echo "<td>{$hotel['vote']}</td>";
-                echo "<td>{$hotel['distance_to_center']}</td>";
-                echo "</tr>";
+            // SE L'OPZIONE SENZA FILTRI LI MOSTRO TUTTI
+            if ($select == 'on') {
+                foreach ($hotels as $hotel) {
+                    echo "<tr>";
+                    echo "<td>{$hotel['name']}</td>";
+                    echo "<td>{$hotel['description']}</td>";
+                    echo "<td>" . ($hotel['parking'] ? 'Yes' : 'No') . "</td>";
+                    echo "<td>{$hotel['vote']}</td>";
+                    echo "<td>{$hotel['distance_to_center']}</td>";
+                    echo "</tr>";
+                }
+            } else {
+                if ($parking == 'true' && $rating == 'true') {
+                    foreach ($hotels as $hotel) {
+                        if ($hotel['parking'] && $hotel['vote'] >= 2.5) {
+                            echo "<tr>";
+                            echo "<td>{$hotel['name']}</td>";
+                            echo "<td>{$hotel['description']}</td>";
+                            echo "<td>" . ($hotel['parking'] ? 'Yes' : 'No') . "</td>";
+                            echo "<td>{$hotel['vote']}</td>";
+                            echo "<td>{$hotel['distance_to_center']}</td>";
+                            echo "</tr>";
+                        }
+                    }
+                } else if ($parking == 'true' && $rating == 'false') {
+                    foreach ($hotels as $hotel) {
+                        if ($hotel['parking']) {
+                            echo "<tr>";
+                            echo "<td>{$hotel['name']}</td>";
+                            echo "<td>{$hotel['description']}</td>";
+                            echo "<td>" . ($hotel['parking'] ? 'Yes' : 'No') . "</td>";
+                            echo "<td>{$hotel['vote']}</td>";
+                            echo "<td>{$hotel['distance_to_center']}</td>";
+                            echo "</tr>";
+                        }
+                    }
+                } else if ($rating == 'true') {
+                    foreach ($hotels as $hotel) {
+                        if ($hotel['vote'] >= 2.5) {
+                            echo "<tr>";
+                            echo "<td>{$hotel['name']}</td>";
+                            echo "<td>{$hotel['description']}</td>";
+                            echo "<td>" . ($hotel['parking'] ? 'Yes' : 'No') . "</td>";
+                            echo "<td>{$hotel['vote']}</td>";
+                            echo "<td>{$hotel['distance_to_center']}</td>";
+                            echo "</tr>";
+                        }
+                    }
+                }
             }
             ?>
         </tbody>
